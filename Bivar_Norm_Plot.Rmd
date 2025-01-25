@@ -1,0 +1,50 @@
+---
+title: "Simulating the Bivariate Standard Normal Distribution"
+author: "Julian Simington"
+date: "2025-01-25"
+output:
+  ioslides_presentation:
+    keep_md: true
+---
+## Welcome
+```{r setup, include=FALSE, echo = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+```{r packages, results='hide', message=FALSE, warning=FALSE}
+# install packages required for data processing and analysis}
+install.packages("plotly", repos = "http://cran.us.r-project.org")
+library(plotly)
+install.packages("dplyr", repos = "http://cran.us.r-project.org")
+library(dplyr)
+
+```
+
+
+Welcome to this brief presentation. Today's date is **`r Sys.Date()`**. 
+
+The plot on the next page is an interactive plot of a simulation of the bivariate standard normal distribution using 1500 x and 1500 y variables. Currently, the interactive features of the plot allow rotating or zooming to change the plot orientation or perspective.
+
+## Plot
+```{r plot3d}
+
+# simulate bivariate standard normal distribution
+
+xnorm100 <- rnorm(1500,0,1) # simulate 1500 standard normal variables
+ynorm100 <- rnorm(1500,0,1) # simulate 1500 standard normal variables
+
+rnorm100 <- data.frame(x = xnorm100, 
+                       y = ynorm100, 
+                       z = exp(-0.5*(xnorm100^2 + ynorm100^2)/sqrt(2*pi)))
+
+sim_plot <- rnorm100 |> 
+  plot_ly(x= ~x,  y = ~y, z = ~z, color = ~z) |> 
+    add_markers()
+sim_plot
+```
+  
+The plot resembles the familiar bell shape. As we would expect, the points become more sparse as we move away from the center of the plot. Change the perspective of the plot to make this more visible.
+  
+## Thanks
+Thanks for reading. Let me know if you have ideas for possible features to add!
